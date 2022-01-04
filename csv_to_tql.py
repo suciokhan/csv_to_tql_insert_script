@@ -54,9 +54,15 @@ for i, r in df.iterrows():
                 if type(r[attrib]) == str:
                     query = query + f'has {attrib} "{r[attrib]}", '
 
-                # If it's not a string, we just push the raw value
+                # If it's not a string...
                 else:
-                    query = query + f'has {attrib} {r[attrib]}, '
+                    # If it's a boolean, convert to lowercase string, insert sans-quotes
+                    if type(r[attrib]) == bool:
+                        bool_val = str(r[attrib]).lower()
+                        query = query + f'has {attrib} {bool_val}, '
+                    # otherwise, use raw value sans-quotes
+                    else:
+                        query = query + f'has {attrib} {r[attrib]}, '
 
             # Replace the final comma with a semicolon
             query = query[:-2] + ';'
@@ -112,7 +118,13 @@ for i, r in df.iterrows():
                         base_query = base_query + \
                             f'has {attrib} "{r[attrib]}", '
                     else:
-                        base_query = base_query + f'has {attrib} {r[attrib]}, '
+                        # If it's a boolean value, convert to lowercase string + insert sans-double-quotes
+                        if type(r[attrib]) == bool:
+                            bool_val = str(r[attrib]).lower()
+                            base_query = base_query + f'has {attrib} {bool_val}, '
+                        else:
+                            # otherwise, we push the raw value
+                            base_query = base_query + f'has {attrib} {r[attrib]}, '
                 # Replace the final comma with a semicolon
                 base_query = base_query[:-2] + ';'
                 # Capture the insert query
