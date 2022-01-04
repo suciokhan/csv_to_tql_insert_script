@@ -1,8 +1,8 @@
 ent_or_rel,sub_type,alias,device_model,mac_address,power_source,name,bssid,ssid,frequency_mhz,resolution,encryption,band_low,band_high,infrared,gimbal,stereoscopic,protocol,channel,lat,lon,host,client
 ent,sbc,$sbc1,rpi4_8GB,48-3a-4c-34-52,ac,yeehaw,,,,,,,,,,,,,23.444,-88.8888,,
 ent,wap,$wap1,SysLink,00-00-22-44-55,ac,,00-1a-3f-f1-4c-c6,free_wifi_dudes,,,wpa2,,,,,,802.11n,,30.48988,-98.8999,,
-ent,camera,$cam1,nestCam,,usb,,,,,4k,,,,FALSE,FALSE,FALSE,,,23.444,-88.8888,,
-ent,sdr,$sdr1,hackrf,,usb,,,,,,,1,6000,,,,,,23.444,-88.8888,,
+ent,camera,$cam1,nestCam,,usb,,,,,4k,,,,False,False,False,,,23.444,-88.8888,,
+ent,sdr,$sdr1,hackrf,,usb,,,,,,,1.0,6000.0,,,,,,23.444,-88.8888,,
 rel,connection,$con1,,,,,,,,,,,,,,,,,,,$sbc1,$cam1
 rel,connection,$con2,,,,,,,,,,,,,,,,,,,$sbc1,$sdr1
 rel,connection,$con3,,,,,,,,,wpa2,,,,,,802.11n,5,,,$wap1,$sbc1
