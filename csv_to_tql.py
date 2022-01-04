@@ -13,7 +13,8 @@ source_file = sys.argv[1]
 
 print(f"You are pulling data in from {source_file}")
 
-df = pd.read_csv(source_file)
+# Must use dtype=object to avoid pandas coercing integers to floats
+df = pd.read_csv(source_file, dtype=object)
 
 row_iterator = 0  # keep track of which row we are processing
 
