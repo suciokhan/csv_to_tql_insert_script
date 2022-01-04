@@ -4,7 +4,7 @@
 
 <b> NOTE </b>
 
-This is a work in progress. Has been tested with strings, floats, integers, and booleans. `Booleans must be entered with 1st letter capitalized and the rest lowercase`(like `False`). Testing has not been done yet for datetime types, and there is no current support for hyperedges.`
+This is a work in progress. Has been tested with strings, floats, integers, and booleans. `Booleans must be entered with 1st letter capitalized and the rest lowercase`(like `False`). Testing has not been done yet for datetime types, and there is `no current support for hyperedges.`
 
 ## CSV FORMAT
 
