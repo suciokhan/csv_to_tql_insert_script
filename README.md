@@ -1,8 +1,10 @@
-# csv_to_tql_insert_script ( WORK IN PROGRESS )
-
-<i>4 JAN 2022: I ran into an issue where Pandas was coercing integers into floats; so far the only fix I've found for this (that wouldn't significantly complicate user experience) causes more problems than it solves, so I'm looking into a non-Pandas-based solution. </i>
+# csv_to_tql_insert_script
  
-<font color = 'yellow'>Automatically generates a TypeQL script for doing entity and relationship insertions from a .csv file, so you don't have to mess with writing TypeQL. </font>
+<font color = 'yellow'>Automatically generates a TypeQL script for doing entity and relationship insertions from a .csv file, so you don't have to mess with writing TypeQL.</font>
+
+<b> NOTE </b>
+
+This is a work in progress. Has been tested with strings, floats, integers, and booleans. `Booleans must be entered with 1st letter capitalized and the rest lowercase`(like `False`). Testing has not been done yet for datetime types, and there is no current support for hyperedges.`
 
 ## CSV FORMAT
 

@@ -1,0 +1,98 @@
+define
+
+################
+## ATTRIBUTES ##
+################
+name sub attribute,
+    value string; # wahoo
+lat sub attribute,
+    value double; # 22.8938
+lon sub attribute,
+    value double; # 79.39482
+band_low sub attribute,
+    value double; # low end of band; e.g. 30.0
+band_high sub attribute,
+    value double; # high-end of band; e.g. 300.0
+frequency_mhz sub attribute,
+    value double; # in MHz, eg. 37.983
+mac_address sub attribute,
+    value string; # 00-1A-3F-F1-4C-C6
+# ip_address sub attribute,
+#     value string; # 127.0.0.1
+channel sub attribute,
+    value long; # 6
+device_model sub attribute,
+    value string; # Raspberry Pi 4 | LattePanda | OAK-D
+encryption sub attribute,
+    value string; # WPA2 | SSP | AES
+resolution sub attribute,
+    value string; # 1024x768, 4k, etc. standardize to w & h values?
+power_source sub attribute,
+    value string; # AC | DC
+infrared sub attribute,
+    value boolean; # True = camera has infrared capability
+stereoscopic sub attribute,
+    value boolean; # True = camera has stereoscopic capability
+gimbal sub attribute,
+    value boolean; # True = camera is gimbal-mounted
+bssid sub attribute,
+    value string; # MAC of WAP
+ssid sub attribute,
+    value string; # name of network
+protocol sub attribute,
+    value string; # bluetooth, loraWAN, WiFi6, etc.
+
+################
+##  ENTITIES  ##
+################
+sbc sub entity,
+    plays connection:client,
+    plays connection:host,
+    owns device_model,
+    owns mac_address,
+    owns power_source,
+    owns name,
+    owns lat,
+    owns lon;
+
+wap sub entity,
+    plays connection:client,
+    plays connection:host,
+    owns device_model,
+    owns bssid,
+    owns ssid,
+    owns encryption,
+    owns power_source,
+    owns lat,
+    owns lon;
+
+camera sub entity,
+    plays connection:client,
+    owns device_model,
+    owns power_source,
+    owns resolution,
+    owns infrared,
+    owns stereoscopic,
+    owns gimbal,
+    owns lat,
+    owns lon;
+
+sdr sub entity,
+    plays connection:client,
+    owns device_model,
+    owns power_source,
+    owns band_low,
+    owns band_high,
+    owns lat,
+    owns lon;
+
+################
+## RELATIONS  ##
+################
+connection sub relation,
+    relates client,
+    relates host,
+    owns frequency_mhz,
+    owns encryption,
+    owns channel,
+    owns protocol;
