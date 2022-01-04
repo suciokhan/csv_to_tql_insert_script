@@ -1,7 +1,7 @@
 # csv_to_tql_insert_script ( WORK IN PROGRESS )
 
-<i>I ran into an issue where Pandas was coercing integers into floats; so far the only fix I've found for this (that wouldn't significantly complicate user experience) results causes more problems than it solves, so I'm looking into a non-Pandas-based solution. </i>
-
+<i>4 JAN 2022: I ran into an issue where Pandas was coercing integers into floats; so far the only fix I've found for this (that wouldn't significantly complicate user experience) results causes more problems than it solves, so I'm looking into a non-Pandas-based solution. </i>
+ 
 <font color = 'yellow'>Automatically generates a TypeQL script for doing entity and relationship insertions from a .csv file, so you don't have to mess with writing TypeQL. </font>
 
 ## CSV FORMAT
