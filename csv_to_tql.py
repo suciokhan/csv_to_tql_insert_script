@@ -41,7 +41,7 @@ for i, r in df.iterrows():
     if "ent" in r['ent_or_rel'].lower():
         try:
             # first, we use sub_type & alias columns
-            query = f'{r["sub_type"]} isa {r["alias"]}, '
+            query = f'{r["alias"]} isa {r["sub_type"]}, ' # first, we use sub_type & alias columns
         except:
             print(
                 "Need to have a sub_type (what kind of entity) and an alias (the $var you use to refer to it in typeDB)")
