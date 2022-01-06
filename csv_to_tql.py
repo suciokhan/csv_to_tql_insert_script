@@ -17,6 +17,11 @@ print(f"You are pulling data in from {source_file}")
 # Must use dtype=object to avoid pandas coercing integers to floats
 df = pd.read_csv(source_file, dtype=object)
 
+# Scrub out any .x trailing chracters in column names
+# We need to preserve the ability to have duplicated colum names
+# for hyper-edges where multiple entities have the same role type
+df.columns = df.columns.str.split('.').str[0].tolist()
+
 row_iterator = 0 # keep track of which row we are processing
 
 insert_query_strings = [] # we will hold our resulting insert queries here
@@ -104,7 +109,13 @@ for i, r in df.iterrows():
             print(f"Need 2 variables pointing at entities (e.x. $a and $b) to create a relationship! Check row {row_iterator}")
             break
         else:
-            base_query = base_query + f' ({roles[0]}:{role_variables[0]}, {roles[1]}:{role_variables[1]}) isa {r["sub_type"]};'
+            role_string = ' ('
+            for role in range(0,len(roles)):
+                role_string = role_string + f'{roles[role]}:{role_variables[role]}, '
+            
+            role_string = role_string[:-2] + f') isa {r["sub_type"]};'
+
+            base_query = base_query + role_string
 
             # If the relationship has attributes, we now add those to the rel insert query
             # To test if this is needed, we check to see how many attributes are in this row
