@@ -1,6 +1,6 @@
 # TypeDB -> CSV to TypeQL (tql) Insert Script
  
-<font color = 'yellow'>This script takes a .csv file and automatically generates a typeQL insert script for you. Intended for TypeDB users who don't need the massive power of TypeDB Loader, but don't want the hassle of having to type out a bunch of TypeQL insert commands.</font>
+<font color = 'yellow'>This script takes a .csv file and automatically generates a typeQL insert script for you. Intended for TypeDB users who don't need the massive power of [TypeDB Loader](https://github.com/typedb-osi/typedb-loader), but don't want the hassle of having to type out a bunch of TypeQL insert commands.</font>
 
 <b> NOTES </b>
 
