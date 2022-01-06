@@ -1,10 +1,20 @@
-# csv_to_tql_insert_script
+# TypeQL -> CSV to TypeQL (tql) Insert Script
  
-<font color = 'yellow'>Automatically generates a TypeQL script for doing entity and relationship insertions from a .csv file, so you don't have to mess with writing TypeQL.</font>
+<font color = 'yellow'>This script takes a .csv file and automatically generates a typeQL insrt script for you. Intended for TypeDB users who don't need the massive power of TypeDB Loader, but don't want the hassle of having to type out a bunch of TypeQL insert commands.</font>
 
-<b> NOTE </b>
+<b> NOTES </b>
 
-This is a work in progress. Has been tested with strings, floats, integers, and booleans. `Booleans must be entered with 1st letter capitalized and the rest lowercase`(like `False`). <i>Testing has not been done yet for datetime types</i>.
+Has been tested with all supported TypeDB data types (strings, longs, doubles, booleans, datetimes). `Booleans must be entered with 1st letter capitalized and the rest lowercase`(like `False`). 
+
+Also, `datetimes must be in one of the following formats` (a trailing 'Z' for zulu time is also acceptable when times are included):
+```
+   - yyyy-mm-dd
+   - yyyy-mm-ddThh:mm
+   - yyyy-mm-ddThh:mm:ss
+   - yyyy-mm-ddThh:mm:ss.f
+   - yyyy-mm-ddThh:mm:ss.ff
+   - yyyy-mm-ddThh:mm:ss.fff
+```
 
 ## CSV FORMAT
 

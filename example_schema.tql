@@ -41,6 +41,8 @@ ssid sub attribute,
     value string; # name of network
 protocol sub attribute,
     value string; # bluetooth, loraWAN, WiFi6, etc.
+date_created sub attribute,
+    value datetime; # yyyy-mm-dd, yyyy-mm-ddThh:mm:ss.fff, etc.
 
 ################
 ##  ENTITIES  ##
@@ -53,7 +55,8 @@ sbc sub entity,
     owns power_source,
     owns name,
     owns lat,
-    owns lon;
+    owns lon,
+    owns date_created;
 
 wap sub entity,
     plays connection:client,
@@ -64,7 +67,8 @@ wap sub entity,
     owns encryption,
     owns power_source,
     owns lat,
-    owns lon;
+    owns lon,
+    owns date_created;
 
 camera sub entity,
     plays connection:client,
@@ -75,7 +79,8 @@ camera sub entity,
     owns stereoscopic,
     owns gimbal,
     owns lat,
-    owns lon;
+    owns lon,
+    owns date_created;
 
 sdr sub entity,
     plays connection:client,
@@ -84,7 +89,8 @@ sdr sub entity,
     owns band_low,
     owns band_high,
     owns lat,
-    owns lon;
+    owns lon,
+    owns date_created;
 
 ################
 ## RELATIONS  ##
@@ -95,4 +101,5 @@ connection sub relation,
     owns frequency_mhz,
     owns encryption,
     owns channel,
-    owns protocol;
+    owns protocol,
+    owns date_created;

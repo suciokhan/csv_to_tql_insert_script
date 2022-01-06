@@ -9,7 +9,32 @@ python3 csv_to_tql.py /path/to/input_csv.csv output_csv_name.csv
 from ast import literal_eval
 import pandas as pd
 import sys
+import re
 
+###############################
+def detectDTG(string):
+    # Detects whether a string fits the format of DTG required for typeQL or not
+
+    # Regexes for acceptable date formats
+    regexes = ["^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[Z]?$", #YYYY-MM-DDThh:mm:ss.fff
+            "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{2}[Z]?$", #YYYY-MM-DDThh:mm:ss.ff
+            "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{1}[Z]?$", #YYYY-MM-DDThh:mm:ss.f
+            "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[Z]?$", #YYYY-MM-DDThh:mm:ss
+            "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}[Z]?$", #YYYY-MM-DDThh:mm
+            "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" #YYYY-MM-DD
+    ]
+
+    validDTG = False # presume false until proven otherwise
+    
+    for r in regexes:
+        result = re.match(r, string)
+        if result:
+            validDTG = True
+
+    return validDTG
+###############################
+
+# path to the csv file with the data you want to ingest
 source_file = sys.argv[1]
 
 print(f"You are pulling data in from {source_file}")
@@ -18,7 +43,7 @@ print(f"You are pulling data in from {source_file}")
 df = pd.read_csv(source_file, dtype=object)
 
 # Scrub out any .x trailing chracters in column names
-# We need to preserve the ability to have duplicated colum names
+# We need to preserve the ability to have duplicated column names
 # for hyper-edges where multiple entities have the same role type
 df.columns = df.columns.str.split('.').str[0].tolist()
 
@@ -29,15 +54,14 @@ insert_query_strings = [] # we will hold our resulting insert queries here
 # For each row
 for i, r in df.iterrows():
     r = r.dropna() # get rid of all the NaN fields for that row
-    # We need a list that is purely attribute names (the x "has y" pieces of the query)
+    # We need a list that is purely attribute names (the "x has y" pieces of the query)
     attributes = r.index.tolist()
     attributes = [x for x in attributes if x not in ['ent_or_rel','sub_type','alias']]
 
     '''
-    Now based on these column attributes & values,
+    Now based on these column names & row values,
     we form our tql strings
     '''
-    
     ############################################
     ######        HANDLE ENTITIES          #####
     ############################################
@@ -61,7 +85,12 @@ for i, r in df.iterrows():
                 
                 # Strings need quotes around them
                 if type(attrib_alt) == str:
-                    query = query + f'has {attrib} "{attrib_alt}", '
+                    # If it's a datetime string, don't quote it
+                    if detectDTG(attrib_alt):
+                        query = query + f'has {attrib} {attrib_alt}, '
+
+                    else:
+                        query = query + f'has {attrib} "{attrib_alt}", '
                 
                 # If it's not a string, we just push the raw value
                 # unless it's a boolean; then we convert to string, make it lowercase, and put it in without-quotes
@@ -136,7 +165,11 @@ for i, r in df.iterrows():
                         attrib_alt = r[attrib]
                     # If it's a string attribute, we need to put quotes around it
                     if type(attrib_alt) == str:
-                        base_query = base_query + f'has {attrib} "{attrib_alt}", '
+                        # If it's a datetime string, don't quote it
+                        if detectDTG(attrib_alt):
+                            base_query = base_query + f'has {attrib} {attrib_alt}, '
+                        else:
+                            base_query = base_query + f'has {attrib} "{attrib_alt}", '
                     else:
                         # If it's a boolean value, convert to lowercase string + insert sans-double-quotes
                         if type(attrib_alt) == bool:
